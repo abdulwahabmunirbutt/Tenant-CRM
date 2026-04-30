@@ -1,0 +1,13 @@
+{
+  "name": "crm-assignment",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "backend:dev": "pnpm --dir backend start:dev",
+    "frontend:dev": "pnpm --dir frontend dev",
+    "backend:build": "pnpm --dir backend build",
+    "frontend:build": "pnpm --dir frontend build",
+    "lint": "pnpm --dir backend lint && pnpm --dir frontend lint"
+  }
+}
+
