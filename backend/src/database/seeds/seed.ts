@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import dataSource from '../data-source';
 import { Customer } from '../../customers/customer.entity';
 import { Note } from '../../notes/note.entity';
