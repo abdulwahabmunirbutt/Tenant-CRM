@@ -1,7 +1,8 @@
 'use client';
 
 import axios from 'axios';
-import { useState } from 'react';
+import { X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useAssignCustomer } from '@/hooks/useCustomers';
 import { useUsers } from '@/hooks/useUsers';
 import { Customer } from '@/lib/types';
@@ -25,8 +26,14 @@ export function AssignUserSelect({ customer }: { customer: Customer }) {
   const assign = useAssignCustomer();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!errorMessage) return;
+    const timer = window.setTimeout(() => setErrorMessage(null), 4000);
+    return () => window.clearTimeout(timer);
+  }, [errorMessage]);
+
   return (
-    <div className="space-y-1">
+    <>
       <select
         className="h-8 w-full rounded-md border border-border bg-white px-2 text-sm outline-none focus:border-accent disabled:bg-surface"
         value={customer.assignedTo ?? ''}
@@ -54,11 +61,23 @@ export function AssignUserSelect({ customer }: { customer: Customer }) {
       {errorMessage && (
         <div
           role="alert"
-          className="rounded-md border border-red-200 bg-red-50 px-2 py-1 text-xs leading-4 text-danger"
+          className="fixed right-4 top-4 z-50 flex w-[min(92vw,420px)] items-start gap-3 rounded-md border border-red-200 bg-white p-3 text-sm text-ink shadow-lg"
         >
-          {errorMessage}
+          <div className="mt-0.5 h-2 w-2 flex-none rounded-full bg-danger" />
+          <div className="min-w-0 flex-1">
+            <p className="font-medium text-danger">Assignment blocked</p>
+            <p className="mt-1 text-muted">{errorMessage}</p>
+          </div>
+          <button
+            type="button"
+            className="rounded p-1 text-muted transition hover:bg-surface hover:text-ink"
+            aria-label="Dismiss assignment error"
+            onClick={() => setErrorMessage(null)}
+          >
+            <X size={16} />
+          </button>
         </div>
       )}
-    </div>
+    </>
   );
 }
