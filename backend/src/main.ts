@@ -23,7 +23,24 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('CRM API')
-    .setDescription('Multi-tenant CRM system API')
+    .setDescription(
+      [
+        'Multi-tenant CRM system API.',
+        '',
+        'Demo credentials:',
+        '- Admin: alice@acme.com / password123',
+        '- Member: bob@acme.com / password123',
+        '- Admin: carol@globex.com / password123',
+        '- Member: dave@globex.com / password123',
+        '',
+        'Testing order:',
+        '1. Use POST /auth/login with an admin account.',
+        '2. Click Authorize and paste only the access token value.',
+        '3. Use GET /customers to copy a real customer id from data[].id.',
+        '4. Use GET /users to copy a real user id from id.',
+        '5. Bob and Dave are seeded with 5 active customers, so assigning another customer to them demonstrates the max-5 concurrency rule.',
+      ].join('\n'),
+    )
     .setVersion('1.0')
     .addBearerAuth()
     .build();

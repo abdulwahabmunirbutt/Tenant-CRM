@@ -164,7 +164,9 @@ export class CustomersService {
       });
 
       if (activeCount >= 5) {
-        throw new ConflictException('This user already has 5 active customers assigned');
+        throw new ConflictException(
+          "This member already has 5 active customers assigned, so you can't assign another customer.",
+        );
       }
 
       const previousAssignee = customer.assignedTo;
